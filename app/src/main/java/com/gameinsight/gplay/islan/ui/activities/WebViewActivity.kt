@@ -27,7 +27,7 @@ class WebViewActivity : BaseActivity<WebAcBinding>() {
         initViewModel()
         wmWebView = viewBinding!!.web
         val smth = intent.getStringExtra("link")
-        Log.d("qqq","web url $smth")
+        Log.d("qqq", "web url $smth")
         loadingUrl = smth ?: ""
         with(wmWebView) {
             loadUrl(loadingUrl)
@@ -98,24 +98,27 @@ class WebViewActivity : BaseActivity<WebAcBinding>() {
         }
     }
 
+    override fun onBackPressed() {
+        if (wmWebView.canGoBack()) {
+            wmWebView.goBack()
+        }
+    }
+
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            Activity.RESULT_CANCELED -> {
-                callback?.onReceiveValue(null)
-                return
-            }
-            Activity.RESULT_OK -> {
-                if (callback == null) return
-                callback!!.onReceiveValue(
-                    WebChromeClient.FileChooserParams.parseResult(
-                        resultCode,
-                        data
-                    )
+        if (resultCode == Activity.RESULT_CANCELED) {
+            callback?.onReceiveValue(null)
+            return
+        } else if (resultCode == Activity.RESULT_OK) {
+            if (callback == null) return
+            callback!!.onReceiveValue(
+                WebChromeClient.FileChooserParams.parseResult(
+                    resultCode,
+                    data
                 )
-                callback = null
-            }
+            )
+            callback = null
         }
     }
 

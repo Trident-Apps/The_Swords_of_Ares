@@ -78,7 +78,7 @@ class FirstActivity : BaseActivity<HostAcBinding>() {
     override fun initViewBinding() = HostAcBinding.inflate(layoutInflater)
     override fun naviGateTo(link: String, adb: String) {
         Log.d("qqq", "url before nav to web $link")
-        if (adb == "1") {
+        if (adb != "1") {
             with(Intent(this, CloakActivity::class.java)) {
                 startActivity(this)
                 this@FirstActivity.finish()
