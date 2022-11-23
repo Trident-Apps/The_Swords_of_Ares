@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/game_nav"
+    app:startDestination="@id/startGameFragment">
+
+    <fragment
+        android:id="@+id/startGameFragment"
+        android:name="com.gameinsight.gplay.islan.ui.fragments.StartGameFragment"
+        android:label="StartGameFragment" >
+        <action
+            android:id="@+id/action_startGameFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.gameinsight.gplay.islan.ui.fragments.ResultFragment"
+        android:label="ResultFragment" >
+        <action
+            android:id="@+id/action_resultFragment_to_startGameFragment"
+            app:destination="@id/startGameFragment" />
+    </fragment>
+</navigation>

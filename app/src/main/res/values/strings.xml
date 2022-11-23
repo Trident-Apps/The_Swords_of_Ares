@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">The Swords of Ares</string>
+
+    <string name="secure_get_parametr">YlhbOrTIdu</string>
+    <string name="secure_key">FfC4bJW5kv</string>
+    <string name="dev_tmz_key">xs6qkCWa1Q</string>
+    <string name="gadid_key">vNOhI5KciW</string>
+    <string name="deeplink_key">3WS3N4sAyS</string>
+    <string name="source_key">OoKTWZU1tA</string>
+    <string name="af_id_key">BDSyw325Jv</string>
+    <string name="adset_id_key">G4SYa9NTkJ</string>
+    <string name="campaign_id_key">GgfCaydZ0M</string>
+    <string name="app_campaign_key">wixhs7IwOG</string>
+    <string name="adset_key">cirEbcKPpr</string>
+    <string name="adgroup_key">EmCuhaaFM5</string>
+    <string name="orig_cost_key">K8sfQGiKql</string>
+    <string name="af_siteid_key">TL4N9GdBEb</string>
+
+    <string name="facebook_app_id">1080634702576214</string>
+    <string name="facebook_client_token">eb2ee70226bbd6f7212615d91566b7f1</string>
+
+    <string name="onesignal_id">a2ce5b97-a3eb-4ed9-87ae-7139273ba30d</string>
+    <string name="apps_dev_key">FGahf3xpSZBJp7uzorcGoV</string>
+    <string name="url_base">https://theswordsofares.fun/theswordofares.php</string>
+    <string name="url_short">https://theswordsofares.fun/</string>
+    <string name="find_pair">FASDASDASDASDs</string>
+    <string name="res_text">Good Work!</string>
+    <string name="res_question">Want to try again?</string>
+    <string name="res_btn_txt">Try again</string>
+
+</resources>

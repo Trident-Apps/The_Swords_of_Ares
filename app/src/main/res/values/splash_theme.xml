@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Start.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_ic</item>
+        <item name="postSplashScreenTheme">@style/Theme.TheSwordsOfAres</item>
+    </style>
+</resources>
