@@ -43,18 +43,20 @@ class FirstActivity : BaseActivity<HostAcBinding>() {
                 }
             } else {
                 lifecycleScope.launch(Dispatchers.Main) {
-                    viewModel.dpLiveData.observe(ctx) { dp ->
-                        Log.d("QQQ", "it's dp in uri build $dp")
-                        if (dp != "null") {
-                            link = viewModel.buildLink(dp, null, advID, ctx)
-                            viewModel.makeTag(dp, null)
-                            naviGateTo(link!!, adbString)
-                        } else {
-                            viewModel.afLiveData.observe(ctx) { afData ->
-                                Log.d("QQQ", "it's data in uri build $afData")
-                                link = viewModel.buildLink("null", afData, advID, ctx)
-                                viewModel.makeTag("null", afData)
+                    if (link == null) {
+                        viewModel.dpLiveData.observe(ctx) { dp ->
+                            Log.d("QQQ", "it's dp in uri build $dp")
+                            if (dp != "null") {
+                                link = viewModel.buildLink(dp, null, advID, ctx)
+                                viewModel.makeTag(dp, null)
                                 naviGateTo(link!!, adbString)
+                            } else {
+                                viewModel.afLiveData.observe(ctx) { afData ->
+                                    Log.d("QQQ", "it's data in uri build $afData")
+                                    link = viewModel.buildLink("null", afData, advID, ctx)
+                                    viewModel.makeTag("null", afData)
+                                    naviGateTo(link!!, adbString)
+                                }
                             }
                         }
                     }
