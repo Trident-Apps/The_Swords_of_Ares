@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -24,8 +23,10 @@ class FirstActivity : BaseActivity<HostAcBinding>() {
         mViewBinding = initViewBinding()
         setContentView(viewBinding!!.root)
         initViewModel()
-        viewModel.loadDp(this)
-        viewModel.loadAF(this)
+        if (!viewModel.isDirExist(APP_LINK_PATH, this)) {
+            viewModel.loadDp(this)
+            viewModel.loadAF(this)
+        }
         lifecycleScope.launch(Dispatchers.IO) {
             val ctx = this@FirstActivity
             advID = getAdvId(ctx).await()
@@ -45,16 +46,27 @@ class FirstActivity : BaseActivity<HostAcBinding>() {
                 lifecycleScope.launch(Dispatchers.Main) {
                     if (link == null) {
                         viewModel.dpLiveData.observe(ctx) { dp ->
-                            Log.d("QQQ", "it's dp in uri build $dp")
+                            viewModel.saveInfo(ctx, APP_LINK_PATH, "1")
                             if (dp != "null") {
-                                link = viewModel.buildLink(dp, null, advID, ctx)
-                                viewModel.makeTag(dp, null)
+                                viewModel.provideListForUrl(dp, null)
+                                viewModel.provideParams(dp, null, ctx)
+                                link = viewModel.appendStringToUrl(advID)
+                                viewModel.makeTag(
+                                    ONESIGNAL_KEY, viewModel.provideStringForTag(
+                                        dp, "null"
+                                    )
+                                )
                                 naviGateTo(link!!, adbString)
                             } else {
                                 viewModel.afLiveData.observe(ctx) { afData ->
-                                    Log.d("QQQ", "it's data in uri build $afData")
-                                    link = viewModel.buildLink("null", afData, advID, ctx)
-                                    viewModel.makeTag("null", afData)
+                                    viewModel.provideListForUrl("null", afData)
+                                    viewModel.provideParams("null", afData, ctx)
+                                    link = viewModel.appendStringToUrl(advID)
+                                    viewModel.makeTag(
+                                        ONESIGNAL_KEY, viewModel.provideStringForTag(
+                                            "null", viewModel.getValueFromMap(afData)
+                                        )
+                                    )
                                     naviGateTo(link!!, adbString)
                                 }
                             }
@@ -74,12 +86,10 @@ class FirstActivity : BaseActivity<HostAcBinding>() {
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(this)[AresViewModel::class.java]
-        Log.d("QQQ", "init VM")
     }
 
     override fun initViewBinding() = HostAcBinding.inflate(layoutInflater)
     override fun naviGateTo(link: String, adb: String) {
-        Log.d("qqq", "url before nav to web $link")
         if (adb == "1") {
             with(Intent(this, CloakActivity::class.java)) {
                 startActivity(this)
@@ -104,5 +114,7 @@ class FirstActivity : BaseActivity<HostAcBinding>() {
         const val ADB_PATH = "adb.txt"
         const val LINK_PATH = "link.txt"
         const val INTENT_EXTRA = "link"
+        const val APP_LINK_PATH = "appLink.txt"
+        const val ONESIGNAL_KEY = "key2"
     }
 }
